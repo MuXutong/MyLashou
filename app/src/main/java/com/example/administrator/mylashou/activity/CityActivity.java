@@ -35,7 +35,9 @@ public class CityActivity extends AppCompatActivity {
     private ImageButton city_refresh;
     private ListView city_list_view;
     private CityAdapter cityAdapter;
+
     private EditText city_keyword;
+
 
 
     @Override
