@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ import com.example.administrator.mylashou.entity.City;
 import com.example.administrator.mylashou.entity.ResponseObject;
 import com.example.administrator.mylashou.util.CONST;
 import com.example.administrator.mylashou.util.HttpUtil;
+import com.example.administrator.mylashou.widget.SideBar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -35,7 +37,7 @@ public class CityActivity extends AppCompatActivity {
     private ImageButton city_refresh;
     private ListView city_list_view;
     private CityAdapter cityAdapter;
-
+    private SideBar side_bar;
     private EditText city_keyword;
 
 
@@ -43,12 +45,14 @@ public class CityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_city);
 
         city_back = findViewById(R.id.city_back);
         city_refresh = findViewById(R.id.city_refresh);
         city_keyword = findViewById(R.id.city_keyword);
         city_list_view = findViewById(R.id.city_list_view);
+        side_bar = findViewById(R.id.side_bar);
 
         LoadCity();
 
@@ -63,6 +67,16 @@ public class CityActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LoadCity();
+            }
+        });
+
+        side_bar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+            @Override
+            public void onTouchingLetterChanged(String s) {
+                //根据传进来的参数设置listview的选中状态
+                int index = cityAdapter.getPositionForSection(s.toUpperCase().charAt(0));
+                city_list_view.setSelection(index);
+
             }
         });
     }
