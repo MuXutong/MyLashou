@@ -10,11 +10,20 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.administrator.mylashou.R;
+import com.example.administrator.mylashou.adapter.CityAdapter;
+import com.example.administrator.mylashou.entity.City;
+import com.example.administrator.mylashou.entity.ResponseObject;
+import com.example.administrator.mylashou.util.CONST;
+import com.example.administrator.mylashou.util.HttpUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Response;
 
 
@@ -25,7 +34,9 @@ public class CityActivity extends AppCompatActivity {
     private Button city_back;
     private ImageButton city_refresh;
     private ListView city_list_view;
+    private CityAdapter cityAdapter;
     private EditText city_keyword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,8 @@ public class CityActivity extends AppCompatActivity {
         city_refresh = findViewById(R.id.city_refresh);
         city_keyword = findViewById(R.id.city_keyword);
         city_list_view = findViewById(R.id.city_list_view);
+
+        LoadCity();
 
         city_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,25 +66,28 @@ public class CityActivity extends AppCompatActivity {
     }
 
     public void LoadCity(){
-        new Thread(new Runnable() {
+        HttpUtil.sendOkHttpRequest(CONST.CITY_LIST, new Callback() {
             @Override
-            public void run() {
-                try {
+            public void onFailure(Call call, IOException e) {
 
-                    Request request = new Request.Builder()
-                        .url("http://10.0.2.2:8080/ls_server/CityServlet")
-                        .build();
-                    Response response= new OkHttpClient().newCall(request).execute();
-
-                    String responseDate =response.body().string();
-
-                    Log.i(TAG, "run: "+responseDate);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
-        }).start();
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseData = response.body().string();
+
+                Gson gson = new GsonBuilder().create();
+                ResponseObject<List<City>> result =
+                        gson.fromJson(responseData, new TypeToken<ResponseObject<List<City>>>(){}.getType());
+
+                Log.i(TAG, "onResponse: "+result.getDatas());
+
+                cityAdapter = new CityAdapter(CityActivity.this,R.layout.city_row,result.getDatas());
+
+                city_list_view.setAdapter(cityAdapter);
+            }
+        });
 
     }
 }

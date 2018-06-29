@@ -5,7 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-
+/**
+ * 欢迎页适配器
+ */
 public class GuideAdapter extends PagerAdapter {
 
     private List<View> mList;

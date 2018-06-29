@@ -24,6 +24,13 @@ public class City {
 	public void setSortKey(String sortKey) {
 		this.sortKey = sortKey;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "\n"+"City{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", sortKey='" + sortKey + '\'' +
+				'}';
+	}
 }

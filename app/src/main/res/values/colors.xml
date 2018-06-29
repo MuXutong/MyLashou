@@ -8,4 +8,6 @@
     <color name="blue">#0d82f7</color>
     <color name="orange">#ffff6900</color>
     <color name="gray">#cfc8bf</color>
+    <color name="gray1">#ff666666</color>
+    <color name="location_city_bg">#e1e1e0</color>
 </resources>

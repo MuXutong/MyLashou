@@ -1,12 +1,12 @@
 package com.example.administrator.mylashou.entity;
 
-public class ResponseObject {
+public class ResponseObject<T> {
 
 	private String msg;
 	private int state =1;
-	private Object datas;
+	private T datas;
 	
-	public ResponseObject(String msg, int state, Object datas) {
+	public ResponseObject(String msg, int state, T datas) {
 	
 		this.msg = msg;
 		this.state = state;
@@ -19,7 +19,7 @@ public class ResponseObject {
 		this.state = state;
 	}
 
-	public ResponseObject(int state, Object datas) {
+	public ResponseObject(int state, T datas) {
 	
 		this.state = state;
 		this.datas = datas;
@@ -41,11 +41,11 @@ public class ResponseObject {
 		this.state = state;
 	}
 
-	public Object getDatas() {
+	public T getDatas() {
 		return datas;
 	}
 
-	public void setDatas(Object datas) {
+	public void setDatas(T datas) {
 		this.datas = datas;
 	}
 	
