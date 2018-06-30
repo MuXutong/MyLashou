@@ -1,6 +1,8 @@
 package com.example.administrator.mylashou.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -45,9 +48,15 @@ public class CityActivity extends AppCompatActivity {
     private SideBar side_bar;
     private EditText city_keyword;
 
-    private AMapLocationClient locationClient = null;
-    private AMapLocationClientOption locationOption ;
+    private TextView myLocation;
 
+    private Handler mHandler;
+
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
 
 
     @Override
@@ -61,6 +70,10 @@ public class CityActivity extends AppCompatActivity {
         city_keyword = findViewById(R.id.city_keyword);
         city_list_view = findViewById(R.id.city_list_view);
         side_bar = findViewById(R.id.side_bar);
+
+        View cityhead = getLayoutInflater().inflate(R.layout.location_city_item,null);
+        myLocation = findViewById(R.id.tv_location_city);
+        city_list_view.addHeaderView(cityhead);
 
         LoadCity();
 
@@ -88,80 +101,97 @@ public class CityActivity extends AppCompatActivity {
             }
         });
 
-        locationOption = new AMapLocationClientOption();
 
-        initLocation();
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == 100) {
+                    city_list_view.setAdapter(cityAdapter);
+                }
+            }
+        };
+
+        //LocationCity();
+
+
     }
 
-    /**
-     * 定位
-     * 初始化
-     */
-    private void initLocation() {
-        //初始化client
-        locationClient = new AMapLocationClient(this.getApplicationContext());
-        //设置定位参数
-        locationClient.setLocationOption(getDefaultOption());
+    private void LocationCity() {
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
 
-        // 设置定位参数
-        locationClient.setLocationOption(locationOption);
-        // 启动定位
-        locationClient.startLocation();
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
 
-        // 设置定位监听
-        locationClient.setLocationListener(new AMapLocationListener() {
+        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+
+        if(null != mLocationClient){
+            mLocationClient.setLocationOption(mLocationOption);
+            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+            mLocationClient.stopLocation();
+            mLocationClient.startLocation();
+        }
+
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+        //设置定位模式为AMapLocationMode.Device_Sensors，仅设备模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);
+        //获取一次定位结果：
+        //该方法默认为false。
+        mLocationOption.setOnceLocation(false);
+        //获取最近3s内精度最高的一次定位结果：
+        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+        mLocationOption.setOnceLocationLatest(true);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        mLocationOption.setHttpTimeOut(20000);
+        //关闭缓存机制
+        mLocationOption.setLocationCacheEnable(false);
+
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+
+        //声明定位回调监听器,设置定位回调监听
+        mLocationClient.setLocationListener(new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
 
-                if (null != aMapLocation && aMapLocation.getErrorCode() == 0) {
-                   // aMapLocation.getCity();
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        //可在其中解析aMapLocation获取相应内容。
+                        myLocation.setText(aMapLocation.getCity());
 
-                    Log.i(TAG, "********************************: "+aMapLocation.getCity());
-                } else {
+                        Toast.makeText(CityActivity.this,aMapLocation.getCity(),Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(CityActivity.this,"定位失败",Toast.LENGTH_SHORT).show();
+                    }else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Log.i(TAG,"location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+
+                        Toast.makeText(CityActivity.this,"定位失败",Toast.LENGTH_SHORT).show();
+
+                    }
                 }
+
             }
         });
+
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (null != locationClient) {
-            /**
-             * 如果AMapLocationClient是在当前Activity实例化的，
-             * 在Activity的onDestroy中一定要执行AMapLocationClient的onDestroy
-             */
-            locationClient.onDestroy();
-            locationClient = null;
-            locationOption = null;
-        }
-
-
-    }
-
-    /**
-     * 默认的定位参数
-     *
-     * @author hongming.wang
-     * @since 2.8.0
-     */
-    private AMapLocationClientOption getDefaultOption() {
-        AMapLocationClientOption mOption = new AMapLocationClientOption();
-        mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
-        mOption.setGpsFirst(false);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
-        mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setInterval(2000);//可选，设置定位间隔。默认为2秒
-        mOption.setNeedAddress(true);//可选，设置是否返回逆地理地址信息。默认是true
-        mOption.setOnceLocation(false);//可选，设置是否单次定位。默认是false
-        mOption.setOnceLocationLatest(false);//可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
-        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);//可选， 设置网络请求的协议。可选HTTP或者HTTPS。默认为HTTP
-        mOption.setSensorEnable(false);//可选，设置是否使用传感器。默认是false
-        mOption.setWifiScan(true); //可选，设置是否开启wifi扫描。默认为true，如果设置为false会同时停止主动刷新，停止以后完全依赖于系统刷新，定位位置可能存在误差
-        mOption.setLocationCacheEnable(true); //可选，设置是否使用缓存定位，默认为true
-        return mOption;
+        //mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
+        //mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
     }
 
 
@@ -171,6 +201,7 @@ public class CityActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Toast.makeText(CityActivity.this,"加载失败",Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onFailure:  加载失败");
             }
 
             @Override
@@ -182,11 +213,14 @@ public class CityActivity extends AppCompatActivity {
                 ResponseObject<List<City>> result =
                         gson.fromJson(responseData, new TypeToken<ResponseObject<List<City>>>(){}.getType());
 
-                Log.i(TAG, "onResponse: "+result.getDatas());
+                //Log.i(TAG, "onResponse: "+result.getDatas());
+
+                Log.i(TAG, "onResponse:  加载成功");
 
                 cityAdapter = new CityAdapter(CityActivity.this,R.layout.city_row,result.getDatas());
 
-                city_list_view.setAdapter(cityAdapter);
+                mHandler.sendEmptyMessage(100);
+
             }
         });
 
