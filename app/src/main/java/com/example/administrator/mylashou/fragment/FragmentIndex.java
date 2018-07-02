@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.activity.CityActivity;
+import com.example.administrator.mylashou.activity.NearbyMapActivity;
 import com.example.administrator.mylashou.adapter.GoodsAdapter;
 import com.example.administrator.mylashou.entity.Goods;
 import com.example.administrator.mylashou.entity.ResponseObject;
@@ -78,7 +79,8 @@ public class FragmentIndex extends Fragment {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
+                mHandler.sendEmptyMessage(20);
+
             }
 
             @Override
@@ -127,7 +129,7 @@ public class FragmentIndex extends Fragment {
         home_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(new Intent(getActivity(), NearbyMapActivity.class));
+                startActivity(new Intent(getActivity(), NearbyMapActivity.class));
 
             }
         });
@@ -152,15 +154,7 @@ public class FragmentIndex extends Fragment {
             }
         });
 
-        //loadDatas(true);
-        new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-
-                goods_list_view.setRefreshing();
-                return true;
-            }
-        }).sendEmptyMessageDelayed(0,200);
+        loadDatas(true);
 
 
         mHandler = new Handler() {
@@ -178,6 +172,10 @@ public class FragmentIndex extends Fragment {
                 if (msg.what == 400) {
                     goods_list_view.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                 }
+                if (msg.what == 20) {
+                    Toast.makeText(getActivity(),"网络走丢了····",Toast.LENGTH_SHORT).show();
+                }
+
         }
         };
     }

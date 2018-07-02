@@ -113,7 +113,7 @@ public class CityActivity extends AppCompatActivity {
             }
         };
 
-        //LocationCity();
+        LocationCity();
 
 
     }

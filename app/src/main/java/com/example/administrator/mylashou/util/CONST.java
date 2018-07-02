@@ -6,12 +6,14 @@ public class CONST {
 
 
     //public static final String IP="10.0.2.2";
-    //public static final String IP="10.0.161.94";
+    public static final String IP="10.0.161.94";
 
     //public static final String HOST = "http://10.0.2.2:8080/joy-manage-controller";
 
-    public static final String CITY_LIST = "http://10.0.2.2:8080/ls_server/CityServlet";
+    public static final String CITY_LIST = "http://"+IP+":8080/ls_server/CityServlet";
 
-    public static final String GOODS_LIST = "http://10.0.2.2:8080/ls_server/GoodsServlet";
+    public static final String GOODS_LIST = "http://"+IP+":8080/ls_server/GoodsServlet";
+
+    public static final String GOODS_NEARBY = "http://"+IP+":8080/ls_server/NearbyServlet";
 
 }
