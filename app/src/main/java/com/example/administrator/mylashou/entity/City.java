@@ -27,7 +27,7 @@ public class City {
 
 	@Override
 	public String toString() {
-		return "\n"+"City{" +
+		return "City{" +
 				"id='" + id + '\'' +
 				", name='" + name + '\'' +
 				", sortKey='" + sortKey + '\'' +

@@ -5,7 +5,34 @@ public class ResponseObject<T> {
 	private String msg;
 	private int state =1;
 	private T datas;
-	
+	private int page;
+	private int size;
+	private int count;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public ResponseObject(String msg, int state, T datas) {
 	
 		this.msg = msg;
@@ -48,7 +75,16 @@ public class ResponseObject<T> {
 	public void setDatas(T datas) {
 		this.datas = datas;
 	}
-	
-	
-	
+
+    @Override
+    public String toString() {
+        return "ResponseObject{" +
+                "msg='" + msg + '\'' +
+                ", state=" + state +
+                ", datas=" + datas +
+                ", page=" + page +
+                ", size=" + size +
+                ", count=" + count +
+                '}';
+    }
 }

@@ -109,6 +109,7 @@ public class CityActivity extends AppCompatActivity {
                 if (msg.what == 100) {
                     city_list_view.setAdapter(cityAdapter);
                 }
+
             }
         };
 
@@ -197,7 +198,7 @@ public class CityActivity extends AppCompatActivity {
 
 
     public void LoadCity(){
-        HttpUtil.sendOkHttpRequest(CONST.CITY_LIST, new Callback() {
+        HttpUtil.sendOkHttpRequest(CONST.CITY_LIST, null,null,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Toast.makeText(CityActivity.this,"加载失败",Toast.LENGTH_SHORT).show();
@@ -213,7 +214,7 @@ public class CityActivity extends AppCompatActivity {
                 ResponseObject<List<City>> result =
                         gson.fromJson(responseData, new TypeToken<ResponseObject<List<City>>>(){}.getType());
 
-                //Log.i(TAG, "onResponse: "+result.getDatas());
+                Log.i(TAG, "onResponse: "+result.getDatas());
 
                 Log.i(TAG, "onResponse:  加载成功");
 
