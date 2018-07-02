@@ -43,6 +43,7 @@ import okhttp3.Response;
 public class NearbyMapActivity extends AppCompatActivity implements AMapLocationListener,LocationSource, AMap.OnInfoWindowClickListener {
 
     private static final String TAG = "MainActivity";
+    private static final String RADIUS = "2000";
     private MapView mMapView = null;
     private AMap aMap;
     private ImageView refreshImg;
@@ -65,7 +66,7 @@ public class NearbyMapActivity extends AppCompatActivity implements AMapLocation
         refreshImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadDatas(String.valueOf(latitude),String.valueOf(longitude),"2000");
+                loadDatas(String.valueOf(latitude),String.valueOf(longitude),RADIUS);
             }
         });
 
@@ -118,7 +119,7 @@ public class NearbyMapActivity extends AppCompatActivity implements AMapLocation
             }
         };
 
-        loadDatas(String.valueOf(latitude),String.valueOf(longitude),"2000");
+        loadDatas(String.valueOf(latitude),String.valueOf(longitude),RADIUS);
     }
 
     private void loadDatas(String lat,String lon,String radius){
