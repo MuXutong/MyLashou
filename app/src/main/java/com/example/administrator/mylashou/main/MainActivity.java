@@ -1,4 +1,4 @@
-package com.example.administrator.mylashou;
+package com.example.administrator.mylashou.main;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.fragment.FragmentIndex;
 import com.example.administrator.mylashou.fragment.FragmentMore;
 import com.example.administrator.mylashou.fragment.FragmentMy;

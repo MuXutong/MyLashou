@@ -1,12 +1,11 @@
 package com.example.administrator.mylashou.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,60 +15,70 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class GoodsAdapter extends ArrayAdapter<Goods> {
+public class GoodsAdapter extends BaseAdapter {
 
-    private int resourceId;
     private List<Goods> mList;
 
-    public GoodsAdapter(@NonNull Context context, int resource, @NonNull List<Goods> objects) {
-        super(context, resource, objects);
-        resourceId = resource;
-        mList = objects;
+    public GoodsAdapter(List<Goods> mList) {
+        this.mList = mList;
+    }
+
+    @Override
+    public int getCount() {
+        return mList == null?0:mList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return (mList == null || position >= mList.size()?null:mList.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Goods goods = getItem(position);
+        ViewHolder holder;
+        if(convertView == null){
+            holder = new ViewHolder();
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.goods_list_row,null);
 
-        View view;
-        ViewHolder viewHolder;
+            holder.title = convertView.findViewById(R.id.title);
+            holder.tv_content = convertView.findViewById(R.id.tv_content);
+            holder.price = convertView.findViewById(R.id.price);
+            holder.value = convertView.findViewById(R.id.value);
+            // viewHolder.count = view.findViewById(R.id.count);
+            holder.photo = convertView.findViewById(R.id.photo);
+            holder.appoitment_img = convertView.findViewById(R.id.appoitment_img);
 
-        if(convertView==null){
+            convertView.setTag(holder);
 
-            view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-            viewHolder = new ViewHolder();
-
-            viewHolder.title = view.findViewById(R.id.title);
-            viewHolder.tv_content = view.findViewById(R.id.tv_content);
-            viewHolder.price = view.findViewById(R.id.price);
-            viewHolder.value = view.findViewById(R.id.value);
-           // viewHolder.count = view.findViewById(R.id.count);
-            viewHolder.photo = view.findViewById(R.id.photo);
-            viewHolder.appoitment_img = view.findViewById(R.id.appoitment_img);
-
-
-            view.setTag(viewHolder);
         }else {
-            view = convertView;
-            viewHolder = (ViewHolder)view.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        Picasso.with(parent.getContext()).load(goods.getImgUrl()).placeholder(R.drawable.default_pic).into(viewHolder.photo);
+        Goods goods =mList.get(position);
 
-        viewHolder.title.setText(goods.getSortTitle());
-        viewHolder.tv_content.setText(goods.getTitle());
+        holder.title.setText(goods.getSortTitle());
+        holder.tv_content.setText(goods.getTitle());
         //viewHolder.count.setText(goods.getBought());
-        viewHolder.price.setText(String.valueOf("￥"+goods.getPrice()));
-        viewHolder.value.setText(String.valueOf("￥"+goods.getValue()));
+        holder.price.setText(String.valueOf("￥"+goods.getPrice()));
+        holder.value.setText(String.valueOf("￥"+goods.getValue()));
 
         if(goods.isOp()){
-            viewHolder.appoitment_img.setVisibility(View.VISIBLE);
+            holder.appoitment_img.setVisibility(View.VISIBLE);
         }else {
-            viewHolder.appoitment_img.setVisibility(View.GONE);
+            holder.appoitment_img.setVisibility(View.GONE);
         }
 
-        return view;
+        Picasso.with(parent.getContext()).load(goods.getImgUrl()).placeholder(R.drawable.default_pic).into(holder.photo);
+
+
+        return convertView;
+
     }
 
 

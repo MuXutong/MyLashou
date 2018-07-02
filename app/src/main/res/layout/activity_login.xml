@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_white"
+    android:orientation="vertical"
+    tools:context=".activity.GoodsListActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/top_bg_n"
+        android:gravity="center_vertical" >
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_activate_bg"
+            android:drawableLeft="@drawable/back"
+            android:gravity="center_vertical"
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"/>
+
+        <View
+            android:layout_width="0.2dp"
+            android:layout_height="25dp"
+            android:background="#55ffffff"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_activate_bg"
+            android:gravity="center"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="账户登录"
+            android:checked="true"
+            android:textSize="20sp"
+            android:textColor="@drawable/radio_btn_select"/>
+        <RadioButton
+            android:id="@+id/rb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="快速登录"
+            android:textSize="20sp"
+            android:textColor="@drawable/radio_btn_select"/>
+
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <View
+            android:layout_width="340dp"
+            android:layout_height="2dp"
+            android:background="@color/gray"/>
+        <View
+            android:id="@+id/fly_view"
+            android:layout_width="170dp"
+            android:layout_height="4dp"
+            android:background="@color/orange"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_for_fast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_corners"
+        android:visibility="gone"
+        android:padding="5dp"
+
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/fast_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textSize="15sp"
+            android:hint="@string/hit_tel"
+            android:ems="10">
+
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <EditText
+                android:id="@+id/fast_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:hint="请输入验证码"
+                android:layout_weight="1">
+
+
+            </EditText>
+
+            <Button
+                android:id="@+id/btn_getCode"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/orange"
+                android:background="@drawable/btn_quick_register_bg_selector"
+                android:textSize="10sp"
+                android:padding="11dp"
+                android:text="@string/get_code" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_for_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_corners"
+        android:padding="5dp"
+        android:orientation="vertical" >
+        <EditText
+            android:id="@+id/register_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textSize="15sp"
+            android:hint="@string/hit_count" >
+        </EditText>
+        <EditText
+            android:id="@+id/register_surePwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            android:hint="@string/hit_password" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        android:background="@drawable/btn_login_bg"
+        android:textColor="@color/white"
+        android:enabled="false"
+        android:text="@string/login" />
+
+</LinearLayout>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nearby_location_group"
+    android:id="@+id/location_group"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:padding="10dp" >
 
     <TextView
-        android:id="@+id/nearby_location"
+        android:id="@+id/location_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

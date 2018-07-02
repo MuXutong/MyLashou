@@ -32,7 +32,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".main.WelcomeActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,10 +41,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".WhatsNewActivity"
+            android:name=".main.WhatsNewActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.CityActivity" />
 
@@ -52,7 +52,9 @@
             android:name="com.amap.api.v2.apikey"
             android:value="248ecd29059dadfcd1b549a3aac45a84" />
 
-        <activity android:name=".activity.NearbyMapActivity"></activity>
+        <activity android:name=".activity.NearbyMapActivity" />
+        <activity android:name=".activity.GoodsListActivity" />
+        <activity android:name=".activity.LoginActivity"></activity>
     </application>
 
 </manifest>

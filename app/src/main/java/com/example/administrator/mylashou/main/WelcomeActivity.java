@@ -1,4 +1,4 @@
-package com.example.administrator.mylashou;
+package com.example.administrator.mylashou.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.util.ToolKits;
 
 public class WelcomeActivity extends AppCompatActivity {

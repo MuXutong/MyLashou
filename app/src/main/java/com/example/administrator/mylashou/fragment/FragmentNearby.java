@@ -10,21 +10,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.adapter.NearbyAdaper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentNearby extends Fragment {
+public class FragmentNearby extends Fragment implements AMapLocationListener{
 
-    private TextView nearby_location;
+    private ProgressBar location_progress;
+    private TextView location_text;
     private GridView nearby_grid_view;
-    private LinearLayout nearby_location_group;
-
+    private LinearLayout location_group;
+    private double geoLat,geoLng;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,8 +42,9 @@ public class FragmentNearby extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         nearby_grid_view = getActivity().findViewById(R.id.nearby_grid_view);
-        nearby_location = getActivity().findViewById(R.id.nearby_location);
-        nearby_location_group = getActivity().findViewById(R.id.nearby_location_group);
+        location_text = getActivity().findViewById(R.id.location_text);
+        location_group = getActivity().findViewById(R.id.location_group);
+        location_progress = getActivity().findViewById(R.id.location_progress);
 
         nearby_grid_view.setAdapter(new NearbyAdaper());
 
@@ -49,5 +54,29 @@ public class FragmentNearby extends Fragment {
                 Toast.makeText(getActivity(),"选中了第"+position+"项",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if(aMapLocation!=null){
+
+            geoLat = aMapLocation.getLatitude();
+            geoLng = aMapLocation.getLongitude();
+            Bundle locBundle = aMapLocation.getExtras();
+            String desc = "";
+            if(locBundle != null){
+                desc = locBundle.getString("desc");
+                location_text.setText(desc);
+                location_progress.setVisibility(View.GONE);
+            }
+
+            stopLocation();
+        }
+
+    }
+
+    private void stopLocation() {
+
+
     }
 }

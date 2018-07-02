@@ -1,4 +1,4 @@
-package com.example.administrator.mylashou;
+package com.example.administrator.mylashou.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.adapter.GuideAdapter;
 
 import java.util.ArrayList;

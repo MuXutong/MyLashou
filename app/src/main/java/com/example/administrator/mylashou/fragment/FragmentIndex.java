@@ -99,8 +99,10 @@ public class FragmentIndex extends Fragment {
 
                 if(direction){ //true表示下拉刷新
                     mList = object.getDatas();
-                    goodsAdapter = new GoodsAdapter(getActivity(),R.layout.goods_list_row,mList);
-                    mHandler.sendEmptyMessage(200);
+                    if(mList!=null){
+                        goodsAdapter = new GoodsAdapter(mList);
+                        mHandler.sendEmptyMessage(200);
+                    }
                     //  goods_list_view.setAdapter(goodsAdapter);
                 }else {//false表示上拉加载更多
                     mList.addAll(object.getDatas());
