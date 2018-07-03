@@ -30,7 +30,7 @@
     <string name="hit_tel">请输入手机号</string>
     <string name="get_code">获取验证码</string>
     <string name="forget_Pwd">忘记密码</string>
-    <string name="text_wearn">你可以点击下方的图标进行第三方登录</string>
+    <string name="text_wearn">第三方登录</string>
     <string name="sina_weibo">新浪微博</string>
     <string name="qq_weibo">腾讯微博</string>
     <string name="qq">QQ</string>

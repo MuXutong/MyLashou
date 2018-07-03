@@ -16,4 +16,7 @@ public class CONST {
 
     public static final String GOODS_NEARBY = "http://"+IP+":8080/ls_server/NearbyServlet";
 
+    public static final String REGISTER_USER="http://"+IP+":8080/ls_server/UserServlet";
+
+    public static final String LOGIN_USER="http://"+IP+":8080/ls_server/UserServlet";
 }

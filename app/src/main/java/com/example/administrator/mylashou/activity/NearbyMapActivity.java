@@ -1,5 +1,6 @@
 package com.example.administrator.mylashou.activity;
 
+import android.annotation.SuppressLint;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +56,7 @@ public class NearbyMapActivity extends AppCompatActivity implements AMapLocation
 
     private LocationManager locationManager = null;
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,24 +100,24 @@ public class NearbyMapActivity extends AppCompatActivity implements AMapLocation
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                super.handleMessage(msg);
+            super.handleMessage(msg);
 
-                if (msg.what == 21) {
-                    Toast.makeText(NearbyMapActivity.this,"网络走丢了····",Toast.LENGTH_SHORT).show();
-                }
+            if (msg.what == 21) {
+                Toast.makeText(NearbyMapActivity.this,"网络走丢了····",Toast.LENGTH_SHORT).show();
+            }
 
-                if (msg.what == 22) {
+            if (msg.what == 22) {
 
-                    //设置镜头自动到缩放级别
-                    aMap.animateCamera(
-                            CameraUpdateFactory.newCameraPosition(
-                                    new CameraPosition(
-                                            new LatLng(latitude,longitude), 14,0,0
-                                    )
-                            )
-                    );
+                //设置镜头自动到缩放级别
+                aMap.animateCamera(
+                        CameraUpdateFactory.newCameraPosition(
+                                new CameraPosition(
+                                        new LatLng(latitude,longitude), 14,0,0
+                                )
+                        )
+                );
 
-                }
+            }
             }
         };
 
