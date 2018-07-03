@@ -33,7 +33,7 @@
 
 <!--用户未登录-->
             <LinearLayout
-                android:id="@+id/to_login_group"
+                android:id="@+id/layout_no_login"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:gravity="center"
@@ -58,7 +58,7 @@
 
 <!--用户已登录-->
             <LinearLayout
-                android:id="@+id/user_info_group"
+                android:id="@+id/layout_for_logined"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:gravity="center"
@@ -80,12 +80,14 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/my_userName"
                         android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="用户名"/>
 
                     <TextView
+                        android:id="@+id/my_userMoney"
                         android:paddingLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -1,7 +1,10 @@
 package com.example.administrator.mylashou.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,13 +16,35 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.mylashou.R;
+import com.example.administrator.mylashou.entity.ResponseObject;
+import com.example.administrator.mylashou.entity.User;
+import com.example.administrator.mylashou.util.CONST;
+import com.example.administrator.mylashou.util.HttpUtil;
+import com.example.administrator.mylashou.util.ToolKits;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements TextWatcher{
 
+    private String msag;
+    private Handler mHandler;
     private RadioGroup rg_login;
+    private RadioButton rb1,rb2;
     private View fly_view;
     private Animation move_to_left,move_to_right;
     private LinearLayout layout_for_fast,layout_for_count;
@@ -46,16 +71,21 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
     // QQ
     private ImageButton qq_btn;
 
-    private String mName, mPwd, mTel, mCode;
+    private TextView login_back;
+    String mName, mPwd, mTel, mCode;
     private boolean mAccount = true;
     public static final String LOGIN_USER = "user";
 
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        rb2 = findViewById(R.id.rb2);
+        rb1 = findViewById(R.id.rb1);
+        login_back= findViewById(R.id.login_back);
         rg_login = findViewById(R.id.rg_login);
         fly_view = findViewById(R.id.fly_view);
         register = findViewById(R.id.register);
@@ -70,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
         qq_btn = findViewById(R.id.qq_btn);
         layout_for_fast=findViewById(R.id.layout_for_fast);
         layout_for_count=findViewById(R.id.layout_for_count);
+
 
 
         move_to_left = AnimationUtils.loadAnimation(this,R.anim.move_to_left);
@@ -89,17 +120,27 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
                         fly_view.startAnimation(move_to_left);
                         layout_for_count.setVisibility(View.VISIBLE);
                         layout_for_fast.setVisibility(View.GONE);
+                        if (!TextUtils.isEmpty(mName) && !TextUtils.isEmpty(mPwd) ) {
+                            login_btn.setEnabled(true);
 
+                        }  else {
+                            login_btn.setEnabled(false);
+                        }
                         break;
                     case R.id.rb2:
                         fly_view.startAnimation(move_to_right);
                         layout_for_fast.setVisibility(View.VISIBLE);
                         layout_for_count.setVisibility(View.GONE);
+                        if (!TextUtils.isEmpty(mTel) && !TextUtils.isEmpty(mCode)) {
+                            login_btn.setEnabled(true);
+
+                        } else {
+                            login_btn.setEnabled(false);
+                        }
                         break;
                 }
             }
         });
-
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,9 +149,86 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
             }
         });
 
+        login_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAccount) {// 以账号的形式登录
+                    Login(mName, mPwd, "accout_login");
+                } else {// 以手机号码的形式登录
+                    Login(mTel, null, "phone_login");
+                }
+            }
+        });
+
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                if (msg.what == 15) {
+                    Toast.makeText(LoginActivity.this, "连接服务器失败，请重试", Toast.LENGTH_SHORT).show();
+
+                }
+
+                if (msg.what == 16) {
+                    Toast.makeText(LoginActivity.this, msag, Toast.LENGTH_SHORT).show();
+
+                }
+
+                if (msg.what == 17) {
+                }
+            }
+        };
 
     }
+
+    private void Login(String name, String pwd, String flag) {
+
+        Map params = new HashMap<String,String>();
+
+        params.put("name", name);
+        params.put("password",pwd);
+        params.put("flag",flag);
+
+
+        HttpUtil.sendOkHttpRequest(CONST.LOGIN_USER, null, params, new Callback(){
+            @Override
+            public void onFailure(Call call, IOException e) {
+                mHandler.sendEmptyMessage(15);
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseData = response.body().string();
+
+                ResponseObject<User> object = new GsonBuilder().create().fromJson(responseData, new TypeToken<ResponseObject<User>>() {}.getType());
+
+                int state = object.getState();
+                msag = object.getMsg();
+
+                if (state == 1) {
+                    // 使用Gson将json数据转换成String类型，并通过SharePreferences将登录数据存储起来
+                    Gson gson = new GsonBuilder().create();
+                    ToolKits.putShareData(LoginActivity.this, LOGIN_USER, gson.toJson(object.getDatas()));
+                    finish();// 登录成功，返回
+                }
+                mHandler.sendEmptyMessage(16);
+            }
+        });
+
+    }
+
+
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -121,13 +239,17 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
         mPwd = count_password.getText().toString().trim();
         mTel = fast_tel.getText().toString().trim();
         mCode = fast_code.getText().toString().trim();
-        if ((!TextUtils.isEmpty(mName) && !TextUtils.isEmpty(mPwd))
-                || (!TextUtils.isEmpty(mTel) && !TextUtils.isEmpty(mCode))) {
+
+        if (!TextUtils.isEmpty(mName) && !TextUtils.isEmpty(mPwd) && rb1.isChecked()) {
+            login_btn.setEnabled(true);
+
+        } else if (!TextUtils.isEmpty(mTel) && !TextUtils.isEmpty(mCode)&& rb2.isChecked()) {
             login_btn.setEnabled(true);
 
         } else {
             login_btn.setEnabled(false);
         }
+
     }
 
     @Override

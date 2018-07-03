@@ -1,5 +1,6 @@
 package com.example.administrator.mylashou.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,7 +45,6 @@ public class FragmentIndex extends Fragment {
     private Handler mHandler;
     private Button home_city;
     private ImageButton home_map;
-    private ImageButton home_search;
 
     private PullToRefreshListView goods_list_view;
 
@@ -120,13 +120,14 @@ public class FragmentIndex extends Fragment {
         goods_list_view.onRefreshComplete();
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         home_city = getActivity().findViewById(R.id.home_city);
         home_map = getActivity().findViewById(R.id.home_map);
-        home_search = getActivity().findViewById(R.id.home_search);
+        ImageButton home_search = getActivity().findViewById(R.id.home_search);
 
         home_map.setOnClickListener(new View.OnClickListener() {
             @Override
