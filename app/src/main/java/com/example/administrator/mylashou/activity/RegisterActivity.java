@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements TextWatcher{
         register_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
