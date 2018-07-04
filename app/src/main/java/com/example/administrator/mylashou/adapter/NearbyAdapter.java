@@ -9,8 +9,9 @@ import android.widget.TextView;
 
 import com.example.administrator.mylashou.R;
 
-public class NearbyAdaper extends BaseAdapter{
+public class NearbyAdapter extends BaseAdapter{
 
+    private String[] category=new String[]{"3","2894","8","2892","2856","2924","4","6",""};
     private String labels[] = new String[]{"美食","电影","酒店","KTY","火锅","美容美发","休闲娱乐","生活服务","全部"};
     private int colors[] = new int[]{
             R.color.item_0, R.color.item_1,
@@ -36,10 +37,10 @@ public class NearbyAdaper extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public String getItem(int position) {
+        // TODO Auto-generated method stub
+        return category[position];
     }
-
     @Override
     public long getItemId(int position) {
         return 0;

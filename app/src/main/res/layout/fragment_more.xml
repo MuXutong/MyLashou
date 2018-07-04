@@ -74,10 +74,22 @@
                     android:textSize="18sp"
                     android:text="清除缓存" />
 
+                <TextView
+                    android:id="@+id/clean_dat_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="516.43KB"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/arrow_right_my" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -95,6 +107,28 @@
                     android:layout_weight="1"
                     android:textSize="18sp"
                     android:text="分享设置" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_right_my" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/good_comment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/my_list_view_item_click"
+                android:gravity="center"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:text="赏个好评吧！" />
 
                 <ImageView
                     android:layout_width="wrap_content"

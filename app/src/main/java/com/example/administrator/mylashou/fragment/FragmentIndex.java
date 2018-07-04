@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.activity.CityActivity;
+import com.example.administrator.mylashou.activity.GoodsDetailActivity;
 import com.example.administrator.mylashou.activity.NearbyMapActivity;
 import com.example.administrator.mylashou.adapter.GoodsAdapter;
 import com.example.administrator.mylashou.entity.Goods;
@@ -41,7 +43,7 @@ import okhttp3.Response;
 
 public class FragmentIndex extends Fragment {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "AA";
     private Handler mHandler;
     private Button home_city;
     private ImageButton home_map;
@@ -88,8 +90,7 @@ public class FragmentIndex extends Fragment {
                 String responseData = response.body().string();
                 Log.i(TAG, "onResponse: "+responseData);
                 Gson gson = new GsonBuilder().create();
-                ResponseObject<List<Goods>> object =
-                        gson.fromJson(responseData, new TypeToken<ResponseObject<List<Goods>>>(){}.getType());
+                ResponseObject<List<Goods>> object = gson.fromJson(responseData, new TypeToken<ResponseObject<List<Goods>>>(){}.getType());
 
                 Log.i(TAG, "onResponse: "+object.getDatas());
 
@@ -160,6 +161,14 @@ public class FragmentIndex extends Fragment {
         loadDatas(true);
 
 
+        goods_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(getContext(), GoodsDetailActivity.class);
+                intent.putExtra("goods", goodsAdapter.getItem(position));//讲Goods对象通过意图传递
+                startActivity(intent);
+            }
+        });
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {

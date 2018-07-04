@@ -1,8 +1,9 @@
 package com.example.administrator.mylashou.entity;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Goods {
+public class Goods implements Serializable{
 
 	private String id;
 	private String categoryId;	

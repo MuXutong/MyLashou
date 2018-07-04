@@ -1,6 +1,8 @@
 package com.example.administrator.mylashou.entity;
 
-public class Shop {
+import java.io.Serializable;
+
+public class Shop implements Serializable {
 	private String id;
 	private String name;
 	private String address;

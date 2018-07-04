@@ -17,8 +17,13 @@ public class User {
         this.email = email;
     }
 
-    public String getCount_money() {
-        return count_money;
+    public int  getCount_money() {
+        if(count_money!=null){
+            return Integer.getInteger(count_money);
+        }else {
+            return 0 ;
+        }
+
     }
 
     public void setCount_money(String count_money) {

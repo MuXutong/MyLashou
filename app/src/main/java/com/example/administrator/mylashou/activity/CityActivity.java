@@ -1,5 +1,6 @@
 package com.example.administrator.mylashou.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -59,6 +60,7 @@ public class CityActivity extends AppCompatActivity {
     public AMapLocationClientOption mLocationOption = null;
 
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,8 +116,6 @@ public class CityActivity extends AppCompatActivity {
         };
 
         LocationCity();
-
-
     }
 
     private void LocationCity() {
@@ -191,8 +191,9 @@ public class CityActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        //mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
-        //mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+        mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
+        mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+
     }
 
 

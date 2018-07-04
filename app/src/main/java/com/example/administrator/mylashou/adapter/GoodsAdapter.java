@@ -2,6 +2,7 @@ package com.example.administrator.mylashou.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.mylashou.R;
+import com.example.administrator.mylashou.activity.GoodsListActivity;
 import com.example.administrator.mylashou.entity.Goods;
+import com.example.administrator.mylashou.util.ToolKits;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,7 +21,8 @@ import java.util.List;
 public class GoodsAdapter extends BaseAdapter {
 
     private List<Goods> mList;
-
+    private static final String TAG = "GoodsAdapter";
+    
     public GoodsAdapter(List<Goods> mList) {
         this.mList = mList;
     }
@@ -29,8 +33,8 @@ public class GoodsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return (mList == null || position >= mList.size()?null:mList.get(position));
+    public Goods getItem(int position) {
+        return (mList == null || position >= mList.size()?null:mList.get(position-1));
     }
 
     @Override
@@ -50,7 +54,7 @@ public class GoodsAdapter extends BaseAdapter {
             holder.tv_content = convertView.findViewById(R.id.tv_content);
             holder.price = convertView.findViewById(R.id.price);
             holder.value = convertView.findViewById(R.id.value);
-            // viewHolder.count = view.findViewById(R.id.count);
+            holder.distance = convertView.findViewById(R.id.distance);
             holder.photo = convertView.findViewById(R.id.photo);
             holder.appoitment_img = convertView.findViewById(R.id.appoitment_img);
 
@@ -64,9 +68,22 @@ public class GoodsAdapter extends BaseAdapter {
 
         holder.title.setText(goods.getSortTitle());
         holder.tv_content.setText(goods.getTitle());
-        //viewHolder.count.setText(goods.getBought());
+       // holder.distance.setText(goods.getBought());
         holder.price.setText(String.valueOf("￥"+goods.getPrice()));
         holder.value.setText(String.valueOf("￥"+goods.getValue()));
+
+        if (GoodsListActivity.lat != null && GoodsListActivity.lon != null) {
+            double distance = ToolKits.getDistance(GoodsListActivity.lat, GoodsListActivity.lon, 
+                    Double.parseDouble(goods.getShop().getLat()), Double.parseDouble(goods.getShop().getLon()));
+            Log.i(TAG, "getView: distance"+distance+"shop"+GoodsListActivity.lat+"  "+ GoodsListActivity.lon+"  "+
+                    Double.parseDouble(goods.getShop().getLat())+"  "+ Double.parseDouble(goods.getShop().getLon()));
+
+            if(distance>1000){
+                holder.distance.setText((int)distance/1000+"千米");
+            }else{
+                holder.distance.setText(distance+"米");
+            }
+        }
 
         if(goods.isOp()){
             holder.appoitment_img.setVisibility(View.VISIBLE);
@@ -91,6 +108,7 @@ public class GoodsAdapter extends BaseAdapter {
         TextView tv_content;
         TextView price;
         TextView value;
+        TextView distance;
         //TextView count;
         ImageView photo;
         ImageView appoitment_img;

@@ -35,12 +35,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class LoginActivity extends AppCompatActivity implements TextWatcher{
+public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
+    //26ae6fafc72db
     private String msag;
     private Handler mHandler;
     private RadioGroup rg_login;
@@ -83,33 +88,8 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        rb2 = findViewById(R.id.rb2);
-        rb1 = findViewById(R.id.rb1);
-        login_back= findViewById(R.id.login_back);
-        rg_login = findViewById(R.id.rg_login);
-        fly_view = findViewById(R.id.fly_view);
-        register = findViewById(R.id.register);
-        count_name = findViewById(R.id.count_name);
-        count_password = findViewById(R.id.count_password);
-        fast_tel = findViewById(R.id.fast_tel);
-        fast_code = findViewById(R.id.fast_code);
-        btn_getCode = findViewById(R.id.btn_getCode);
-        login_btn = findViewById(R.id.login_btn);
-        weibo_btn = findViewById(R.id.weibo_btn);
-        wechat_btn = findViewById(R.id.wechat_btn);
-        qq_btn = findViewById(R.id.qq_btn);
-        layout_for_fast=findViewById(R.id.layout_for_fast);
-        layout_for_count=findViewById(R.id.layout_for_count);
+        initView();
 
-
-
-        move_to_left = AnimationUtils.loadAnimation(this,R.anim.move_to_left);
-        move_to_right = AnimationUtils.loadAnimation(this,R.anim.move_to_right);
-
-        count_name.addTextChangedListener(this);
-        count_password.addTextChangedListener(this);
-        fast_tel.addTextChangedListener(this);
-        fast_code.addTextChangedListener(this);
 
         rg_login.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -167,6 +147,42 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
             }
         });
 
+        weibo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Platform platform = ShareSDK.getPlatform(SinaWeibo.NAME);// 得到平台
+                platform.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {}
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {}
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {}
+                });
+                if (platform.isAuthValid()) {// 如果已经授权过，则直接登录
+                    String nickName = platform.getDb().getUserName();
+                    String Uid = platform.getDb().getUserId();
+                    Login(nickName, Uid, "social_login");
+                    return;
+                } else {
+                    platform.showUser(null);// 弹出授权界面
+                }
+            }
+        });
+        wechat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        qq_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         mHandler = new Handler() {
             @Override
@@ -187,6 +203,42 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
                 }
             }
         };
+
+    }
+
+    private void initView() {
+
+
+        weibo_btn = findViewById(R.id.weibo_btn);
+        wechat_btn = findViewById(R.id.wechat_btn);
+        qq_btn = findViewById(R.id.qq_btn);
+
+        rb2 = findViewById(R.id.rb2);
+        rb1 = findViewById(R.id.rb1);
+        login_back= findViewById(R.id.login_back);
+        rg_login = findViewById(R.id.rg_login);
+        fly_view = findViewById(R.id.fly_view);
+        register = findViewById(R.id.register);
+        count_name = findViewById(R.id.count_name);
+        count_password = findViewById(R.id.count_password);
+        fast_tel = findViewById(R.id.fast_tel);
+        fast_code = findViewById(R.id.fast_code);
+        btn_getCode = findViewById(R.id.btn_getCode);
+        login_btn = findViewById(R.id.login_btn);
+        weibo_btn = findViewById(R.id.weibo_btn);
+        wechat_btn = findViewById(R.id.wechat_btn);
+        qq_btn = findViewById(R.id.qq_btn);
+        layout_for_fast=findViewById(R.id.layout_for_fast);
+        layout_for_count=findViewById(R.id.layout_for_count);
+
+
+        move_to_left = AnimationUtils.loadAnimation(this,R.anim.move_to_left);
+        move_to_right = AnimationUtils.loadAnimation(this,R.anim.move_to_right);
+
+        count_name.addTextChangedListener(this);
+        count_password.addTextChangedListener(this);
+        fast_tel.addTextChangedListener(this);
+        fast_code.addTextChangedListener(this);
 
     }
 

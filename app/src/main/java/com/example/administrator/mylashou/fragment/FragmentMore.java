@@ -1,6 +1,8 @@
 package com.example.administrator.mylashou.fragment;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -18,7 +20,10 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.administrator.mylashou.R;
-
+import com.example.administrator.mylashou.activity.LoginActivity;
+import com.example.administrator.mylashou.util.HELP;
+import com.example.administrator.mylashou.util.ToolKits;
+import com.umeng.fb.FeedbackAgent;
 
 public class FragmentMore extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
@@ -26,11 +31,16 @@ public class FragmentMore extends Fragment implements CompoundButton.OnCheckedCh
     private LinearLayout clean_dat;
     private LinearLayout share_setting;
     private LinearLayout check_update;
-    private TextView current_vison;
-    private TextView lashou_phone;
     private LinearLayout suggest_back;
     private LinearLayout lashou_help;
     private LinearLayout help;
+    private LinearLayout  good_comment;
+
+    private TextView current_vison;
+    private TextView lashou_phone;
+    private TextView clean_dat_view;
+
+    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +53,9 @@ public class FragmentMore extends Fragment implements CompoundButton.OnCheckedCh
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        activity = getActivity();
+
+        good_comment = getActivity().findViewById(R.id.good_comment);
         switch_togg = getActivity().findViewById(R.id.switch_togg);
         clean_dat = getActivity().findViewById(R.id.clean_dat);
         share_setting = getActivity().findViewById(R.id.share_setting);
@@ -52,6 +65,7 @@ public class FragmentMore extends Fragment implements CompoundButton.OnCheckedCh
         suggest_back = getActivity().findViewById(R.id.suggest_back);
         lashou_help = getActivity().findViewById(R.id.lashou_help);
         help = getActivity().findViewById(R.id.help);
+        clean_dat_view= getActivity().findViewById(R.id.clean_dat_view);
 
         current_vison.setText("当前版本：V" + getVersion());
         switch_togg.setOnCheckedChangeListener(this);
@@ -62,7 +76,7 @@ public class FragmentMore extends Fragment implements CompoundButton.OnCheckedCh
         suggest_back.setOnClickListener(this);
         lashou_help.setOnClickListener(this);
         help.setOnClickListener(this);
-
+        good_comment.setOnClickListener(this);
     }
 
     @Override
@@ -70,17 +84,24 @@ public class FragmentMore extends Fragment implements CompoundButton.OnCheckedCh
         switch (v.getId()) {
 
             case R.id.check_update:
-            //    UmengUpdateAgent.forceUpdate(getActivity());// 手动自动更新
+                Toast.makeText(getActivity(), "正在检测是否有最新版本", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "当前为最新版本", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.suggest_back:// 用户反馈
-            //    FeedbackAgent agent = new FeedbackAgent(getActivity());
-            //    agent.startFeedbackActivity();
+                FeedbackAgent agent = new FeedbackAgent(getActivity());
+                agent.startFeedbackActivity();
+                break;
+
+            case R.id.good_comment:
+                Toast.makeText(getActivity(), "感谢五星好评", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.clean_dat:
-                Toast.makeText(getActivity(), "清除缓存", Toast.LENGTH_SHORT).show();
+                ToolKits.cleanShareData(getContext(), LoginActivity.LOGIN_USER);
+                clean_dat_view.setText("0kB");
                 break;
             case R.id.share_setting:
-                Toast.makeText(getActivity(), "分享设置", Toast.LENGTH_SHORT).show();
+                shareText("aaaa","aaa","aaaa");
+
                 break;
 
             case R.id.lashou_help:
@@ -88,11 +109,51 @@ public class FragmentMore extends Fragment implements CompoundButton.OnCheckedCh
                         + lashou_phone.getText().toString().trim())));
                 break;
             case R.id.help:
+                helpShow();
                 Toast.makeText(getActivity(), "帮助", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
+    private void helpShow() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("帮助")  //  ;
+                .setMessage(HELP.CONTENT)
+                .setIcon(R.drawable.logo)  //  图标
+                .setPositiveButton("确定", null)
+                .create()
+                .show();
+
+    }
+
+    /**
+     * 分享文字内容
+     *
+     * @param dlgTitle
+     *            分享对话框标题
+     * @param subject
+     *            主题
+     * @param content
+     *            分享内容（文字）
+     */
+    private void shareText(String dlgTitle, String subject, String content) {
+        if (content == null || "".equals(content)) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        if (subject != null && !"".equals(subject)) {
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        }
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+
+        // 设置弹出框标题
+        if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
+            startActivity(Intent.createChooser(intent, dlgTitle));
+        } else { // 系统默认标题
+            startActivity(intent);
+        }
+    }
 
     @Override
     public void setMenuVisibility(boolean menuVisible) {// 重写这函数，为了防止显示的界面内容重叠
@@ -122,6 +183,5 @@ public class FragmentMore extends Fragment implements CompoundButton.OnCheckedCh
         }
         return "NoKnowVersion";
     }
-
 
 }

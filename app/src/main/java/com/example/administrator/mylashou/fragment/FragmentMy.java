@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.mylashou.R;
+import com.example.administrator.mylashou.activity.AccountActivity;
 import com.example.administrator.mylashou.activity.LoginActivity;
 import com.example.administrator.mylashou.entity.User;
 import com.example.administrator.mylashou.util.ToolKits;
@@ -27,6 +29,7 @@ public class FragmentMy extends Fragment {
     private TextView my_userName;
     private TextView my_userMoney;
 
+    private ImageView accout_manager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +45,7 @@ public class FragmentMy extends Fragment {
 
         bt_login = getActivity().findViewById(R.id.bt_login);
 
+        accout_manager = getActivity().findViewById(R.id.accout_manager);
         layout_no_login = getActivity().findViewById(R.id.layout_no_login);
         layout_for_logined = getActivity().findViewById(R.id.layout_for_logined);
         my_userName = getActivity().findViewById(R.id.my_userName);
@@ -50,7 +54,14 @@ public class FragmentMy extends Fragment {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
+
+        accout_manager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AccountActivity.class));
             }
         });
 

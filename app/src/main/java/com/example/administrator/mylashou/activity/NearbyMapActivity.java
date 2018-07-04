@@ -44,7 +44,7 @@ import okhttp3.Response;
 public class NearbyMapActivity extends AppCompatActivity implements AMapLocationListener,LocationSource, AMap.OnInfoWindowClickListener {
 
     private static final String TAG = "MainActivity";
-    private static final String RADIUS = "2000";
+    private static final String RADIUS = "1000000";
     private MapView mMapView = null;
     private AMap aMap;
     private ImageView refreshImg;
