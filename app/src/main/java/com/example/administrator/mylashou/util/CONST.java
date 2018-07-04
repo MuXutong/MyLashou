@@ -19,4 +19,10 @@ public class CONST {
     public static final String REGISTER_USER="http://"+IP+":8080/ls_server/UserServlet";
 
     public static final String LOGIN_USER="http://"+IP+":8080/ls_server/UserServlet";
+
+    public static final String ADD_FAVORITE="http://"+IP+":8080/ls_server/FavoriteServlet";
+
+    public static final String SHOW_FAVORITE="http://"+IP+":8080/ls_server/ShowFavoriteServlet";
+
+    //http://localhost:8080/ls_server/ShowFavoriteServlet?user_id=16
 }

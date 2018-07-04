@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.activity.AccountActivity;
+import com.example.administrator.mylashou.activity.FavoriteActivity;
 import com.example.administrator.mylashou.activity.LoginActivity;
 import com.example.administrator.mylashou.entity.User;
 import com.example.administrator.mylashou.util.ToolKits;
@@ -23,12 +25,14 @@ import com.google.gson.GsonBuilder;
 
 public class FragmentMy extends Fragment {
 
+    private Button favorite_btn;
     private Button bt_login;
     private LinearLayout layout_no_login;
     private LinearLayout layout_for_logined;
     private TextView my_userName;
     private TextView my_userMoney;
 
+    private User mUser;
     private ImageView accout_manager;
 
     @Override
@@ -45,11 +49,33 @@ public class FragmentMy extends Fragment {
 
         bt_login = getActivity().findViewById(R.id.bt_login);
 
+        favorite_btn = getActivity().findViewById(R.id.favorite_btn);
         accout_manager = getActivity().findViewById(R.id.accout_manager);
         layout_no_login = getActivity().findViewById(R.id.layout_no_login);
         layout_for_logined = getActivity().findViewById(R.id.layout_for_logined);
         my_userName = getActivity().findViewById(R.id.my_userName);
         my_userMoney = getActivity().findViewById(R.id.my_userMoney);
+
+        favorite_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Gson gson=new GsonBuilder().create();
+                String userStr= ToolKits.getShareData(getContext(), LoginActivity.LOGIN_USER,null);
+                mUser=gson.fromJson(userStr, User.class);
+                if(mUser!=null){
+
+                    Intent intent = new Intent(getContext(), FavoriteActivity.class);
+                    intent.putExtra("user_id", mUser.getId());//讲Goods对象通过意图传递
+                    startActivity(intent);
+
+                }else{
+                    startActivity(new Intent(getContext(),LoginActivity.class));
+                    Toast.makeText(getContext(),"请先登录",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override

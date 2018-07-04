@@ -186,7 +186,6 @@ public class CityActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -195,8 +194,6 @@ public class CityActivity extends AppCompatActivity {
         mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
 
     }
-
-
 
     public void LoadCity(){
         HttpUtil.sendOkHttpRequest(CONST.CITY_LIST, null,null,new Callback() {

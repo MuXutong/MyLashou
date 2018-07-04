@@ -1,9 +1,12 @@
 package com.example.administrator.mylashou.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +15,29 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.mylashou.R;
+import com.example.administrator.mylashou.entity.Favorite;
 import com.example.administrator.mylashou.entity.Goods;
+import com.example.administrator.mylashou.entity.ResponseObject;
 import com.example.administrator.mylashou.entity.Shop;
+import com.example.administrator.mylashou.entity.User;
+import com.example.administrator.mylashou.util.CONST;
+import com.example.administrator.mylashou.util.HttpUtil;
+import com.example.administrator.mylashou.util.ToolKits;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class GoodsDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,9 +65,14 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView comment_more;// 查看更多评论
     private TextView goods_detail_price;// 商品价格
     private TextView goods_detail_value;// 商品原价
+    private ImageView goods_detail_share;
+    private ImageView goods_detial_favriate;
 
+    private Handler mHandler;
+    private Favorite favorite;
     private Goods goods;
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,9 +127,31 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
             goods_detail_value.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);// 在原价上面画横线
 
         }
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                if (msg.what == 31) {
+                    Toast.makeText(GoodsDetailActivity.this, "连接服务器失败，请重试", Toast.LENGTH_SHORT).show();
+                }
+
+                if (msg.what == 32) {
+                    Toast.makeText(GoodsDetailActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                }
+
+                if (msg.what == 33) {
+                    Toast.makeText(GoodsDetailActivity.this, "该商品已收藏", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
     }
 
     private void Initview() {
+
+        goods_detial_favriate = findViewById(R.id.goods_detial_favriate);
+        goods_detail_share = findViewById(R.id.goods_detail_share);
         shop_address = findViewById(R.id.shop_address);
         goods_image = findViewById(R.id.goods_image);
         goods_title = findViewById(R.id.goods_title);
@@ -128,6 +176,8 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
 
         shop_call.setOnClickListener(this);
         detail_exit.setOnClickListener(this);
+        goods_detial_favriate.setOnClickListener(this);
+        goods_detail_share.setOnClickListener(this);
     }
 
 
@@ -143,6 +193,69 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
             case R.id.detail_exit:
                 finish();
                 break;
+            case R.id.goods_detail_share:
+                shareText("malashou","malashou","malashou");
+                break;
+            case R.id.goods_detial_favriate:
+                add_favriate();
+                break;
+        }
+    }
+
+    private void add_favriate() {
+        Gson gson=new GsonBuilder().create();
+        String userStr= ToolKits.getShareData(GoodsDetailActivity.this, LoginActivity.LOGIN_USER,null);
+        User user=gson.fromJson(userStr, User.class);
+        if(user!=null){
+            Map params = new HashMap<String,String>();
+
+            params.put("user_id", user.getId());
+            params.put("prodouct_id",goods.getId());
+
+            HttpUtil.sendOkHttpRequest(CONST.ADD_FAVORITE, null, params, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    mHandler.sendEmptyMessage(31);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseData = response.body().string();
+
+                    ResponseObject<Favorite> object = new GsonBuilder().create().fromJson(responseData, new TypeToken<ResponseObject<Favorite>>() {}.getType());
+                    int state = object.getState();
+                    if (state == 1) {
+                        favorite = object.getDatas();
+                        mHandler.sendEmptyMessage(32);
+                    } else {
+                        mHandler.sendEmptyMessage(33);
+                    }
+                }
+            });
+        }else{
+            startActivity(new Intent(GoodsDetailActivity.this,LoginActivity.class));
+            Toast.makeText(GoodsDetailActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private void shareText(String dlgTitle, String subject, String content) {
+        if (content == null || "".equals(content)) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        if (subject != null && !"".equals(subject)) {
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        }
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+
+        // 设置弹出框标题
+        if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
+            startActivity(Intent.createChooser(intent, dlgTitle));
+        } else { // 系统默认标题
+            startActivity(intent);
         }
     }
 
