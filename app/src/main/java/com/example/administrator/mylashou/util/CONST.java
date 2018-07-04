@@ -27,4 +27,10 @@ public class CONST {
     public static final String SHOW_FAVORITE="http://"+IP+":8080/ls_server/ShowFavoriteServlet";
 
     //http://localhost:8080/ls_server/ShowFavoriteServlet?user_id=16
+
+    //http://localhost:8080/ls_server/SelectOrderServlet?user_id=16&state=1
+    public static final String SELECT_ORDER="http://"+IP+":8080/ls_server/SelectOrderServlet";
+
+   // http://localhost:8080/ls_server/OrderServlet?state=1&allprice=464&count=2&user_id=16&prodouct_id=892856
+    public static final String ADD_ORDER="http://"+IP+":8080/ls_server/OrderServlet";
 }

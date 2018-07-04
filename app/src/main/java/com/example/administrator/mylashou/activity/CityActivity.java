@@ -42,6 +42,7 @@ public class CityActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+
     private Button city_back;
     private ImageButton city_refresh;
     private ListView city_list_view;
@@ -115,7 +116,20 @@ public class CityActivity extends AppCompatActivity {
             }
         };
 
-        LocationCity();
+        //LocationCity();
+
+
+        //Toast.makeText(CityActivity.this,"定位成功",Toast.LENGTH_SHORT).show();
+        // 首次自动加载数据
+        new Handler(new Handler.Callback() {
+
+            @Override
+            public boolean handleMessage(Message msg) {
+               Toast.makeText(CityActivity.this,"定位城市：太原",Toast.LENGTH_SHORT).show();
+               return true;
+            }
+        }).sendEmptyMessageDelayed(0, 1500);
+
     }
 
     private void LocationCity() {
@@ -176,7 +190,7 @@ public class CityActivity extends AppCompatActivity {
                                 + aMapLocation.getErrorCode() + ", errInfo:"
                                 + aMapLocation.getErrorInfo());
 
-                        Toast.makeText(CityActivity.this,"定位失败",Toast.LENGTH_SHORT).show();
+
 
                     }
                 }
@@ -190,8 +204,8 @@ public class CityActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
-        mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+//        mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
+//        mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
 
     }
 

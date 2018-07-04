@@ -40,6 +40,8 @@ public class CityAdapter extends ArrayAdapter<City> implements SectionIndexer{
             viewHolder = new ViewHolder();
             viewHolder.item_city = view.findViewById(R.id.item_city);
             viewHolder.item_city_section = view.findViewById(R.id.item_city_section);
+            viewHolder.tv_location_city = view.findViewById(R.id.tv_location_city);
+
             view.setTag(viewHolder);
         }else {
             view = convertView;
@@ -47,8 +49,10 @@ public class CityAdapter extends ArrayAdapter<City> implements SectionIndexer{
         }
 
 
+
         //viewHolder.item_city_section.setText(city.getSortKey());
         viewHolder.item_city.setText(city.getName());
+
 
         int section = getSectionForPosition(position);
         if(getPositionForSection(section)==position){
@@ -89,6 +93,8 @@ public class CityAdapter extends ArrayAdapter<City> implements SectionIndexer{
         TextView item_city_section;
 
         TextView item_city;
+
+        TextView tv_location_city;
     }
 
 }

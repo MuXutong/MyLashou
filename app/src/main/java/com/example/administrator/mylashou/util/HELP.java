@@ -1,6 +1,7 @@
 package com.example.administrator.mylashou.util;
 
 public class HELP {
+    public static final String FUKUAN="\n \n支付宝账号：133******89 \n付款方式：余额宝";
 
     public static final String CONTENT="拉手网客户端由拉手无线团队精心打造，具有完整的浏览、支付、消费等功能，每天推出多单精品消费，包括餐厅、酒吧、KTV、SPA、美发、瑜伽等精选特色商家和商品，凑够最低团购人数即可享有至尊无敌折扣！更有客户端独家优惠，现金抵用券免费送！记得邀请好友一同参加哦！ 优雅即态度，拉手最生活，更多精彩功能将在拉手客户端陆续推出，期待与你的每一次“拉手”…\n" +
             "\n" +
@@ -55,5 +56,7 @@ public class HELP {
             "\n" +
             "Q.我是商家，想在拉手网组织团购，怎么联系？\n" +
             "欢迎可提供高品质服务或产品的优质商家成为拉手网特约合作伙伴，如您有意，请用电脑登录拉手网www.lashou.com，页面底部进入“商务合作-团购合作”进行操作；";
+
+
 
 }

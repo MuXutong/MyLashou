@@ -204,7 +204,9 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
                 add_favriate();
                 break;
             case R.id.goods_detail_buy:
-                startActivity(new Intent(GoodsDetailActivity.this,OrderActivity.class));
+                Intent intent1 = new Intent(GoodsDetailActivity.this,OrderActivity.class);
+                intent1.putExtra("goods", goods);//讲Goods对象通过意图传递
+                startActivity(intent1);
                 break;
         }
     }
@@ -214,6 +216,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
         String userStr= ToolKits.getShareData(GoodsDetailActivity.this, LoginActivity.LOGIN_USER,null);
         User user=gson.fromJson(userStr, User.class);
         if(user!=null){
+
             Map params = new HashMap<String,String>();
 
             params.put("user_id", user.getId());
