@@ -43,8 +43,8 @@ import okhttp3.Response;
 
 public class NearbyMapActivity extends AppCompatActivity implements AMapLocationListener,LocationSource, AMap.OnInfoWindowClickListener {
 
-    private static final String TAG = "MainActivity";
-    private static final String RADIUS = "1000000";
+    private static final String TAG = "aaaaa";
+    private static final String RADIUS = "1000";
     private MapView mMapView = null;
     private AMap aMap;
     private ImageView refreshImg;
@@ -132,7 +132,7 @@ public class NearbyMapActivity extends AppCompatActivity implements AMapLocation
         params.put("lon",lon);
         params.put("radius",radius);
 
-        HttpUtil.sendOkHttpRequest(CONST.GOODS_NEARBY, null,params,new Callback(){
+        HttpUtil.sendOkHttpRequest(CONST.MAP_NEARBY, null,params,new Callback(){
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -142,7 +142,7 @@ public class NearbyMapActivity extends AppCompatActivity implements AMapLocation
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseData = response.body().string();
-               // Log.i(TAG, "onResponse: "+responseData);
+                Log.i(TAG, "onResponse: "+responseData);
                 Gson gson = new GsonBuilder().create();
                 ResponseObject<List<Goods>> object =
                         gson.fromJson(responseData, new TypeToken<ResponseObject<List<Goods>>>(){}.getType());

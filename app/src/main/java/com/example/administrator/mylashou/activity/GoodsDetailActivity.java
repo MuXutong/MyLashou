@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
     private static final String TAG = "GoodsDetailActivity";
 
 
+    private Button goods_detail_buy;
     private TextView detail_exit;
     private ImageView goods_image;// 商品图片
     private TextView goods_title;// 商品名称
@@ -150,6 +152,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void Initview() {
 
+        goods_detail_buy = findViewById(R.id.goods_detail_buy);
         goods_detial_favriate = findViewById(R.id.goods_detial_favriate);
         goods_detail_share = findViewById(R.id.goods_detail_share);
         shop_address = findViewById(R.id.shop_address);
@@ -174,6 +177,7 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
         goods_detail_value = findViewById(R.id.goods_detail_value);
         detail_exit= findViewById(R.id.detail_exit);
 
+        goods_detail_buy.setOnClickListener(this);
         shop_call.setOnClickListener(this);
         detail_exit.setOnClickListener(this);
         goods_detial_favriate.setOnClickListener(this);
@@ -198,6 +202,9 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.goods_detial_favriate:
                 add_favriate();
+                break;
+            case R.id.goods_detail_buy:
+                startActivity(new Intent(GoodsDetailActivity.this,OrderActivity.class));
                 break;
         }
     }

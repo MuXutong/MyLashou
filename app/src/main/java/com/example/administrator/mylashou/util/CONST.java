@@ -15,6 +15,8 @@ public class CONST {
     public static final String GOODS_LIST = "http://"+IP+":8080/ls_server/GoodsServlet";
 
     public static final String GOODS_NEARBY = "http://"+IP+":8080/ls_server/NearbyServlet";
+    //http://localhost:8080/ls_server/MapServlet?lat=40.075483&lon=116.3676612&radius=500
+    public static final String MAP_NEARBY = "http://"+IP+":8080/ls_server/MapServlet";
 
     public static final String REGISTER_USER="http://"+IP+":8080/ls_server/UserServlet";
 
