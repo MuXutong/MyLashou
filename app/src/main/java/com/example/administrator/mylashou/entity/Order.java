@@ -1,6 +1,8 @@
 package com.example.administrator.mylashou.entity;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
     private String ordersId;
 
     private String userId;

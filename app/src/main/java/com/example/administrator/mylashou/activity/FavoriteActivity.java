@@ -73,7 +73,7 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(FavoriteActivity.this, GoodsDetailActivity.class);
-                intent.putExtra("goods", mAdapter.getItem(position));//讲Goods对象通过意图传递
+                intent.putExtra("goods", mAdapter.getItem(position));
                 startActivity(intent);
             }
         });

@@ -1,11 +1,14 @@
 package com.example.administrator.mylashou.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -63,6 +66,15 @@ public class ShowUnpayOrderActivity extends AppCompatActivity {
                     PullToRefreshBase<ListView> refreshView) {
                 // TODO Auto-generated method stub
                 loadOrder(refreshView.getScrollY() < 0);// refreshView.getScrollY()<0为true表示下拉刷新，为false表示上拉更多
+            }
+        });
+
+        goods_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(ShowUnpayOrderActivity.this, OrderDetailActivity.class);
+                intent.putExtra("order", mAdapter.getItem(position));
+                startActivity(intent);
             }
         });
 

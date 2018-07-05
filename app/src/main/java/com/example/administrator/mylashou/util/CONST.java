@@ -33,4 +33,8 @@ public class CONST {
 
    // http://localhost:8080/ls_server/OrderServlet?state=1&allprice=464&count=2&user_id=16&prodouct_id=892856
     public static final String ADD_ORDER="http://"+IP+":8080/ls_server/OrderServlet";
+
+   // http://localhost:8080/ls_server/UpdateOrderServlet?orders_id=15
+    public static final String UPDATE_ORDER="http://"+IP+":8080/ls_server/UpdateOrderServlet";
+
 }

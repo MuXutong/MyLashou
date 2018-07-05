@@ -1,5 +1,6 @@
 package com.example.administrator.mylashou.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -53,6 +54,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
     private double price;
     private double allprice;
     private User user;
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

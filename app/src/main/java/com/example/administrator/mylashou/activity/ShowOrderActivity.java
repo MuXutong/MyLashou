@@ -1,11 +1,14 @@
 package com.example.administrator.mylashou.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -66,6 +69,15 @@ public class ShowOrderActivity extends AppCompatActivity {
             }
         });
 
+
+        goods_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(ShowOrderActivity.this, OrderDetailActivity.class);
+                intent.putExtra("order", mAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
 
         mHandler = new Handler() {
             @Override

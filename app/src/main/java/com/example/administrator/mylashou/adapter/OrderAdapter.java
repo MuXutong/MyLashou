@@ -30,7 +30,7 @@ public class OrderAdapter extends BaseAdapter {
 
     @Override
     public Order getItem(int position) {
-        return (mList == null || position >= mList.size()?null:mList.get(position-1));
+        return mList.get(position-1);
     }
 
     @Override
