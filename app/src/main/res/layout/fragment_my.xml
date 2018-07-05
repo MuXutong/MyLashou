@@ -152,6 +152,7 @@
 
     <!--第1个-->
                 <LinearLayout
+                    android:id="@+id/unpay_order"
                     android:padding="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -171,15 +172,15 @@
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:textSize="15sp"
-                        android:text="代付款订单"/>
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/orange_bg"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        android:textSize="14sp"
-                        android:text="2"/>
+                        android:text="待付款订单"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="25dp"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:background="@drawable/orange_bg"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textColor="#ffffff"-->
+                        <!--android:textSize="14sp"-->
+                        <!--android:text="2"/>-->
                     <ImageView
                         android:layout_marginRight="15dp"
                         android:layout_width="wrap_content"
@@ -188,6 +189,7 @@
                 </LinearLayout>
     <!--第2个-->
                 <LinearLayout
+                    android:id="@+id/pay_order"
                     android:padding="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -207,14 +209,14 @@
                         android:layout_gravity="center_vertical"
                         android:textSize="15sp"
                         android:text="已付款订单"/>
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/orange_bg"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        android:textSize="14sp"
-                        android:text="2"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="25dp"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:background="@drawable/orange_bg"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textColor="#ffffff"-->
+                        <!--android:textSize="14sp"-->
+                        <!--android:text="2"/>-->
                     <ImageView
                         android:layout_marginRight="15dp"
 
@@ -244,14 +246,14 @@
                         android:layout_gravity="center_vertical"
                         android:textSize="15sp"
                         android:text="抽奖单"/>
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/orange_bg"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        android:textSize="14sp"
-                        android:text="2"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="25dp"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:background="@drawable/orange_bg"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textColor="#ffffff"-->
+                        <!--android:textSize="14sp"-->
+                        <!--android:text="2"/>-->
                     <ImageView
                         android:layout_marginRight="15dp"
 
@@ -281,14 +283,14 @@
                         android:layout_gravity="center_vertical"
                         android:textSize="15sp"
                         android:text="抵用券"/>
-                    <TextView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/orange_bg"
-                        android:gravity="center"
-                        android:textColor="#ffffff"
-                        android:textSize="14sp"
-                        android:text="2"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="25dp"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:background="@drawable/orange_bg"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textColor="#ffffff"-->
+                        <!--android:textSize="14sp"-->
+                        <!--android:text="2"/>-->
                     <ImageView
                         android:layout_marginRight="15dp"
 

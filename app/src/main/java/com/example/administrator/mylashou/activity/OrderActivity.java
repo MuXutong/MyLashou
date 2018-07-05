@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.administrator.mylashou.R;
 import com.example.administrator.mylashou.entity.Goods;
+import com.example.administrator.mylashou.entity.Order;
+import com.example.administrator.mylashou.entity.ResponseObject;
 import com.example.administrator.mylashou.entity.User;
 import com.example.administrator.mylashou.util.CONST;
 import com.example.administrator.mylashou.util.HELP;
@@ -22,6 +24,7 @@ import com.example.administrator.mylashou.util.HttpUtil;
 import com.example.administrator.mylashou.util.ToolKits;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -186,13 +189,13 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
                 String responseData = response.body().string();
                 Log.i(TAG, "onResponse: "+responseData);
-//                ResponseObject<Order> object = new GsonBuilder().create().fromJson(responseData, new TypeToken<ResponseObject<Order>>() {}.getType());
-//                int restate = object.getState();
-//                if (restate == 1) {
-//                    mHandler.sendEmptyMessage(52);
-//                } else {
-//                    mHandler.sendEmptyMessage(53);
-//                }
+                ResponseObject<Order> object = new GsonBuilder().create().fromJson(responseData, new TypeToken<ResponseObject<Order>>() {}.getType());
+                int restate = object.getState();
+                if (restate == 1) {
+                    mHandler.sendEmptyMessage(52);
+                } else {
+                    mHandler.sendEmptyMessage(53);
+                }
             }
         });
     }

@@ -99,7 +99,10 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.FavoriteActivity" />
-        <activity android:name=".activity.OrderActivity"></activity>
+        <activity android:name=".activity.OrderActivity" />
+        <activity android:name=".activity.ShowOrderActivity" />
+        <activity android:name=".activity.ShowUnpayOrderActivity" />
+        <activity android:name=".activity.OrderDetailActivity"></activity>
     </application>
 
 </manifest>

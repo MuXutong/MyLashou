@@ -5,15 +5,32 @@ public class Order {
 
     private String userId;
 
-    private Integer ordersProdouctCount;
+    private String ordersProdouctCount;
 
     private String ordersTime;
 
     private String ordersAllPrice;
 
-    private Integer ordersPaystate;
+    private String ordersPaystate;
 
     private String ordersProdouctId;
+
+    private Goods Goods;
+    
+	public Goods getGoods() {
+		return Goods;
+	}
+
+	public void setGoods(Goods goods) {
+		Goods = goods;
+	}
+
+	@Override
+	public String toString() {
+		return "\n Order [ordersId=" + ordersId + ", userId=" + userId + ", ordersProdouctCount=" + ordersProdouctCount
+				+ ", ordersTime=" + ordersTime + ", ordersAllPrice=" + ordersAllPrice + ", ordersPaystate="
+				+ ordersPaystate + ", ordersProdouctId=" + ordersProdouctId + ", Goods= goods" + "]";
+	}
 
 	public String getOrdersId() {
 		return ordersId;
@@ -31,11 +48,11 @@ public class Order {
 		this.userId = userId;
 	}
 
-	public Integer getOrdersProdouctCount() {
+	public String getOrdersProdouctCount() {
 		return ordersProdouctCount;
 	}
 
-	public void setOrdersProdouctCount(Integer ordersProdouctCount) {
+	public void setOrdersProdouctCount(String ordersProdouctCount) {
 		this.ordersProdouctCount = ordersProdouctCount;
 	}
 
@@ -55,11 +72,11 @@ public class Order {
 		this.ordersAllPrice = ordersAllPrice;
 	}
 
-	public Integer getOrdersPaystate() {
+	public String getOrdersPaystate() {
 		return ordersPaystate;
 	}
 
-	public void setOrdersPaystate(Integer ordersPaystate) {
+	public void setOrdersPaystate(String ordersPaystate) {
 		this.ordersPaystate = ordersPaystate;
 	}
 
@@ -71,5 +88,6 @@ public class Order {
 		this.ordersProdouctId = ordersProdouctId;
 	}
 
+   
   
 }

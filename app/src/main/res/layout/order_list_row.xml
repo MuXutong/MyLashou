@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/app_white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginRight="5.0dip"
+        android:layout_marginTop="5.0dip"
+        android:background="@drawable/list_view_item_click"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/photo_layout"
+            android:layout_width="67dp"
+            android:layout_height="69dp"
+            android:gravity="center"
+            android:padding="2.0dip">
+
+            <ImageView
+                android:id="@+id/order_photo"
+                android:layout_width="59dp"
+                android:layout_height="50dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_pic" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:layout_marginLeft="6.0dip"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/pay_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6.0dip"
+
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="正院大宅门"
+                android:textColor="@color/title_color"
+                android:textSize="15.0sp" />
+
+            <TextView
+                android:id="@+id/pay_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="[三里屯]正院大宅门(SOHO店)四人餐一份"
+                android:textColor="@color/value_color"
+                android:textSize="13.0sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="6.0dip"
+            android:orientation="vertical" >
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="79dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="0.3" />
+
+                <TextView
+                    android:id="@+id/order_oneprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="￥168"
+                    android:textColor="@color/orange"
+                    android:textSize="15.0sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"/>
+
+                <TextView
+                    android:id="@+id/order_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x2"
+                    android:textColor="@color/value_color"
+                    android:textSize="13.0sp" />
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="0.0"
+                    android:text="合计："
+                    android:textColor="@color/gray1"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/order_allprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="0.0"
+                    android:text="￥336"
+                    android:textColor="@color/orange"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
